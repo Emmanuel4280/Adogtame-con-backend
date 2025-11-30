@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BASE_URL } from "../config"; // 🔹 Ajusta la ruta según donde esté tu archivo
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -15,15 +16,16 @@ function Register() {
     e.preventDefault();
 
     try {
-      console.log("Datos enviados:", formData); // 🔹 correcto
-      const res = await fetch("http://localhost:5000/api/auth/register", {
+      console.log("Datos enviados:", formData);
+      const res = await fetch(`${BASE_URL}/api/auth/register`, {
+        // 🔹 Aquí usamos BASE_URL
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
-      console.log("Respuesta del backend:", data); // 🔹 ver qué devuelve
+      console.log("Respuesta del backend:", data);
 
       if (!res.ok) {
         alert(data.error || "Error al registrarse");
@@ -31,7 +33,7 @@ function Register() {
       }
 
       alert("Usuario creado con éxito");
-      window.location.href = "/login"; // redirige a login
+      window.location.href = "/login";
     } catch (error) {
       console.error("Error en fetch:", error);
       alert("Error al conectarse al servidor");
@@ -50,7 +52,6 @@ function Register() {
         <h3 className="text-center mb-3 fw-bold">Crear Cuenta</h3>
 
         <form onSubmit={handleSubmit}>
-          {/* Email */}
           <div className="mb-3">
             <label className="form-label fw-bold">Correo</label>
             <input
@@ -64,7 +65,6 @@ function Register() {
             />
           </div>
 
-          {/* Password */}
           <div className="mb-3">
             <label className="form-label fw-bold">Contraseña</label>
             <input
@@ -78,7 +78,6 @@ function Register() {
             />
           </div>
 
-          {/* Submit */}
           <button type="submit" className="btn btn-success w-100">
             Crear Cuenta
           </button>

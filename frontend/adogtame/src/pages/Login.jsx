@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BASE_URL } from "../config"; // 🔹 Ajusta la ruta según donde esté el archivo
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -15,7 +16,8 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+      const res = await fetch(`${BASE_URL}/api/auth/login`, {
+        // 🔹 Usamos BASE_URL
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -28,10 +30,8 @@ function Login() {
         return;
       }
 
-      // 🔥 GUARDAR TOKEN CORRECTAMENTE
+      // 🔥 Guardar token
       localStorage.setItem("token", data.token);
-
-      // 🔥🔥 GUARDAR USER ID (para saber quién creó qué perros)
       localStorage.setItem("userId", data.usuario.id);
 
       alert("Sesión iniciada con éxito");

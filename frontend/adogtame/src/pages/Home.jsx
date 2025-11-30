@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DogCard from "../components/DogCard";
+import { BASE_URL } from "../config"; // 🔹 Ajusta la ruta según donde esté tu archivo
 
 function Home() {
   const [dogs, setDogs] = useState([]);
@@ -7,7 +8,7 @@ function Home() {
   useEffect(() => {
     const fetchDogs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/perros");
+        const res = await fetch(`${BASE_URL}/api/perros`); // 🔹 Usamos BASE_URL
         const data = await res.json();
 
         console.log("PERROS EN HOME:", data);

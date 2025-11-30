@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { getUserId } from "../utils/auth.js";
+import { BASE_URL } from "../config"; // 🔹 Importamos BASE_URL
 
 function DogDetail() {
   const { id } = useParams();
@@ -8,19 +9,18 @@ function DogDetail() {
   const navigate = useNavigate();
   const [dog, setDog] = useState(location.state || null);
 
-  const userId = getUserId(); // viene del token
+  const userId = getUserId();
 
   // Si no viene por state, lo descarga del backend
   useEffect(() => {
     if (!dog && id) {
-      fetch(`http://localhost:5000/api/perros/${id}`)
+      fetch(`${BASE_URL}/api/perros/${id}`) // 🔹 Usamos BASE_URL
         .then((res) => res.json())
         .then((data) => setDog(data))
         .catch((err) => console.error("Error al obtener perro:", err));
     }
   }, [id, dog]);
 
-  // Mientras no carga
   if (!dog) return <p className="text-center mt-5">Cargando perro...</p>;
 
   const { nombre, descripcion, telephone, imageUrl, creadoPor } = dog;
@@ -35,7 +35,8 @@ function DogDetail() {
     if (!window.confirm("¿Seguro que quieres eliminar este perro?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/perros/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/perros/${id}`, {
+        // 🔹 Usamos BASE_URL
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
