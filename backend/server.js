@@ -13,7 +13,7 @@ app.use("/uploads", express.static("uploads"));
 
 // Conexión a MongoDB
 mongoose
-  .connect("mongodb://localhost:27017/adogtame")
+  .connect("process.env.MONGODB_URI")
   .then(() => console.log("MongoDB conectado"))
   .catch((err) => console.error(err));
 
