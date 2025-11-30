@@ -26,6 +26,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/perros", perrosRoutes);
 
 // Levantar servidor
-app.listen(5000, () => {
-  console.log("Servidor escuchando en puerto 5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en puerto ${PORT}`);
 });
